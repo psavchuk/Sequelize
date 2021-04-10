@@ -133,6 +133,26 @@ router.put("/meals", async (req, res) => {
 /// /////////////////////////////////
 /// ////////Macros Endpoints/////////
 /// /////////////////////////////////
+
+/*
+router.get("/mealmacros", async (req, res) => {
+  try {
+    //const meals = await db.Meals.findAll();
+    db.Meals.hasOne(db.Macros, {foreignKey : 'macro_id'});
+    const macros = await db.Macros.findAll({
+      include: [{
+        model: db.Meals
+      }]
+    });
+
+    res.send(macros)
+
+  } catch (err) {
+    console.error(err);
+    res.error("Server error");
+  }
+});*/
+
 router.get("/macros", async (req, res) => {
   try {
     const macros = await db.Macros.findAll();

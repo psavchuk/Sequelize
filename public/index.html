@@ -6,20 +6,39 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <link rel="stylesheet" href="style.css" type="text/css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RocknRoll+One">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js" integrity="sha512-FJ2OYvUIXUqCcPf1stu+oTBlhn54W0UisZB/TNrZaVMHHhYvLBV9jMbvJYtvDe5x/WVaoXZ6KB+Uqe5hT2vlyA==" crossorigin="anonymous"></script>
 
-    <title>Assignment 1</title>
+    <title>Paul Savchuk</title>
 </head>
 <body>
+    <h1>Paul Savchuk</h1>
     <form class="userform">
         <div class="container is-max-desktop">
-            <div class="title">
-                <h1>Meal Macro Information</h1>
+            <!--Meal Macro Visualization-->
+            <div>
+                <div class="title">
+                    <h1>Meal Macro Visualization</h1>
+                </div>
+                <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;">
+                </div>
             </div>
-            <div class="results-div">
-              <ul class="results">
-                
-              </ul>
+
+            <!--Dining Hall-->
+            <div>
+                <div class="title">
+                    <h1>Dining Hall Information</h1>
+                </div>
+                <div class="content">
+                  <table class="results">
+                    <tr>
+                        <td>Hall ID</td>
+                        <td>Name</td>
+                        <td>Address</td>
+                    </tr>
+                  </table>
+                </div>
             </div>
+
         </div>
     </form>
 

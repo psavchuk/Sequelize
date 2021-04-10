@@ -8,18 +8,135 @@ async function windowActions() {
     //const endpoint = 'https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json';
 
     //list
-
-
-    const request = await fetch('/api');
     //const data = await request.json();
 
     //const request = await fetch(endpoint);
         //.then(blob => blob.json())
         //.then(data => places.push(...data));
 
-    const places = await request.json();
+    //meals
 
-    console.log(places);
+    async function mealmacros() {
+
+      const mealRequest = await fetch('/api/meals');
+      const macroRequest = await fetch('/api/macros');
+      const meals = await mealRequest.json();
+      const macros = await macroRequest.json();
+  
+      const mealmacroResults = [];
+
+      let randomInts = [];
+
+      //highly inefficient
+      const calories = [];
+      const carbs = [];
+      const cholesterol = [];
+      const fat = [];
+      const protein = [];
+      const sodium = [];
+  
+      for (let i = 0; i < 10; i++) {
+          let r = getRandomInt(meals.length);
+          if(randomInts.includes(r))
+          {
+            i--;
+          }
+          else
+          {
+            randomInts.push(r);
+          }
+      }
+
+      for (let i = 0; i < randomInts.length; i++) {
+        const element = randomInts[i];
+        mealmacroResults[i] = Object.assign(meals[element], macros[element]);
+        calories.push({x: /*meals[element].meal_name*/ i, y: macros[element].calories});
+        carbs.push({x: /*meals[element].meal_name*/ i, y: macros[element].carbs});
+        cholesterol.push({x: /*meals[element].meal_name*/ i, y: macros[element].cholesterol});
+        fat.push({x: /*meals[element].meal_name*/ i, y: macros[element].fat});
+        protein.push({x: /*meals[element].meal_name*/ i, y: macros[element].proteins});
+        sodium.push({x: /*meals[element].meal_name*/ i, y: macros[element].sodium});
+        console.log(mealmacroResults[i]);
+      }
+
+      var chart = new CanvasJS.Chart("chartContainer", {
+        axisX: {
+          title: "Meal",
+          titleFontSize: 24,
+          valueFormatString: "string"
+        },
+
+        axisY: {
+          title: "Macros",
+          titleFontSize: 24
+        },
+
+        data: [{
+          type: "stackedBar",
+          name: "Calories",
+          dataPoints: calories
+        },
+        {
+          type: "stackedBar",
+          name: "Carbohydrates",
+          dataPoints: carbs
+        },
+        {
+          type: "stackedBar",
+          name: "Cholesterol",
+          dataPoints: cholesterol
+        },
+        {
+          type: "stackedBar",
+          name: "Fat",
+          dataPoints: fat
+        },
+        {
+          type: "stackedBar",
+          name: "Protein",
+          dataPoints: protein
+        },
+        {
+          type: "stackedBar",
+          name: "Sodium",
+          dataPoints: sodium
+        }
+      ]
+      });
+
+      chart.render();
+
+      console.log(meals);
+      console.log(macros);
+    }
+
+
+    //dining
+    //const diningRequest = await fetch('/api/dining');
+    //const places = await diningRequest.json();
+    
+    function displayTable()
+    {
+      const html = places.data.map(place => {
+        return `
+        <tr>
+          <td>
+            ${place.hall_id}
+          </td>
+          <td>
+            ${place.hall_name}
+          </td>
+          <td>
+            ${place.hall_address}
+          </td>
+        </tr>
+        `
+      }).join('');
+  
+      list.innerHTML += html;
+    }
+
+
 
     /*function findMatches(wordToMatch, places) {
         return places.filter(place => {
@@ -67,6 +184,13 @@ async function windowActions() {
         displayMatches(evt)
     });*/
     
+    mealmacros();
+
+    //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+    function getRandomInt(max)
+    {
+      return Math.floor(Math.random() * max);
+    }
 }
 
 window.onload = windowActions;
